@@ -23,6 +23,7 @@ int main() {
     scanf("%s", name1);
 
     char* choicePlayer1 = new char[32];
+    char* choicePlayer2 = new char[32];
     bool isX1 = false;
     fprintf(stdout, "X or O:\n");
     scanf("%s", choicePlayer1);
@@ -32,11 +33,15 @@ int main() {
 
     if (strcmp(choicePlayer1, "X") == 0){
         isX1 = true;
+        choicePlayer2 = "O";
     }
-
+    else{
+        choicePlayer2 = "X";
+    }
     Player player1 (name1, isX1);
     Player player2 (name2, !isX1);
-
+    fprintf(stdout, "Thanks %s and %s! Here is how the game work:\n", player1.getName().c_str(), player2.getName().c_str());
+    fprintf(stdout, "--------------------------------------------------------------------\n");
     fprintf(stdout, "Fields are marked as follows: \n");
     fprintf(stdout, " TL | TM | TR \n");
     fprintf(stdout, "----+----+----\n");
@@ -71,11 +76,13 @@ int main() {
             char* command = new char[32];
             bool correctMove = false;
             while (!correctMove){
-                fprintf(stdout, "%s make your move\n", player1.getName().c_str());
+
+                fprintf(stdout, "%s make your move - you are %s \n", player1.getName().c_str(), choicePlayer1);
                 fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
                 scanf("%s", command);
                 correctMove = player1.move(board, command);
             }
+            fprintf(stdout,"\n");
             won = checkWin(board);
             if (won){
                 fprintf(stdout, "%s won!", player1.getName().c_str());
@@ -87,11 +94,12 @@ int main() {
             char* command = new char[32];
             bool correctMove = false;
             while (!correctMove){
-                fprintf(stdout, "%s make your move\n", player2.getName().c_str());
+                fprintf(stdout, "%s make your move - you are %s\n", player2.getName().c_str(), choicePlayer2);
                 fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
                 scanf("%s", command);
                 correctMove = player2.move(board, command);
             }
+            fprintf(stdout,"\n");
             won = checkWin(board);
             if (won){
                 fprintf(stdout, "%s won!\n", player2.getName().c_str());
@@ -104,16 +112,18 @@ int main() {
         }
         fprintf(stdout, "Current board:\n");
         printCheckerboard(board);
+        fprintf(stdout,"\n");
         if (draw == 1){
             // Player2's move
             char* command = new char[32];
             bool correctMove = false;
             while (!correctMove){
-                fprintf(stdout, "%s make your move\n", player2.getName().c_str());
+                fprintf(stdout, "%s make your move - you are %s \n", player2.getName().c_str(), choicePlayer2);
                 fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
                 scanf("%s", command);
                 correctMove = player2.move(board, command);
             }
+            fprintf(stdout,"\n");
             won = checkWin(board);
             if (won){
                 fprintf(stdout, "%s won!\n", player2.getName().c_str());
@@ -125,11 +135,12 @@ int main() {
             char* command = new char[32];
             bool correctMove = false;
             while (!correctMove){
-                fprintf(stdout, "%s make your move\n", player1.getName().c_str());
+                fprintf(stdout, "%s make your move - you are %s\n", player1.getName().c_str(), choicePlayer1);
                 fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
                 scanf("%s", command);
                 correctMove = player1.move(board, command);
             }
+            fprintf(stdout,"\n");
             won = checkWin(board);
             if (won){
                 fprintf(stdout, "%s won!\n", player1.getName().c_str());
@@ -142,6 +153,7 @@ int main() {
         }
         fprintf(stdout, "Current board:\n");
         printCheckerboard(board);
+        fprintf(stdout,"\n");
     }
     fprintf(stdout, "Final board:\n");
     printCheckerboard(board);
