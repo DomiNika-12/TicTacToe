@@ -11,6 +11,8 @@ using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
 void printCheckerboard(char array[3][3]);
+bool checkWin(char array[3][3]);
+bool isBoardFull(char array[3][3]);
 
 int main() {
     fprintf(stdout, "Welcome to the Tic-Tac-Toe game!\n");
@@ -42,30 +44,110 @@ int main() {
     fprintf(stdout, "----+----+----\n");
     fprintf(stdout, " BL | BM | BR \n");
     fprintf(stdout, "Each time indicate your choice by typing in one of the following:\n");
-    fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR");
-    fprintf(stdout, "Prompt will tell you which fields are still available");
+    fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
+    fprintf(stdout, "Prompt will tell you which fields are still available\n");
     fprintf(stdout, "--------------------------------------------------------------------\n");
+    sleep_for(3s);
     fprintf(stdout, "Let's start!\n");
-    fprintf(stdout, "Draw in progress...");
+    fprintf(stdout, "Draw in progress...\n");
     int draw = rand() % 2 + 1;
     sleep_for(3s);
     if (draw == 1){
-        fprintf(stdout, "%s starts", player1.getName().c_str());
+        fprintf(stdout, "%s starts\n", player1.getName().c_str());
     }
     else {
-        fprintf(stdout, "%s starts", player2.getName().c_str());
+        fprintf(stdout, "%s starts\n", player2.getName().c_str());
     }
+    fprintf(stdout, "--------------------------------------------------------------------\n");
+
     char board[3][3] = {{' ',' ',' '},
                      {' ',' ',' '},
                      {' ',' ',' '}};
 
     bool won = false;
     while (!won){
-
+        if (draw == 1){
+            // Player1's move
+            char* command = new char[32];
+            bool correctMove = false;
+            while (!correctMove){
+                fprintf(stdout, "%s make your move\n", player1.getName().c_str());
+                fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
+                scanf("%s", command);
+                correctMove = player1.move(board, command);
+            }
+            won = checkWin(board);
+            if (won){
+                fprintf(stdout, "%s won!", player1.getName().c_str());
+                break;
+            }
+        }
+        else {
+            // Player2's move
+            char* command = new char[32];
+            bool correctMove = false;
+            while (!correctMove){
+                fprintf(stdout, "%s make your move\n", player2.getName().c_str());
+                fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
+                scanf("%s", command);
+                correctMove = player2.move(board, command);
+            }
+            won = checkWin(board);
+            if (won){
+                fprintf(stdout, "%s won!\n", player2.getName().c_str());
+                break;
+            }
+        }
+        if (isBoardFull(board)){
+            fprintf(stdout, "Draw! No one won.\n");
+            break;
+        }
+        fprintf(stdout, "Current board:\n");
+        printCheckerboard(board);
+        if (draw == 1){
+            // Player2's move
+            char* command = new char[32];
+            bool correctMove = false;
+            while (!correctMove){
+                fprintf(stdout, "%s make your move\n", player2.getName().c_str());
+                fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
+                scanf("%s", command);
+                correctMove = player2.move(board, command);
+            }
+            won = checkWin(board);
+            if (won){
+                fprintf(stdout, "%s won!\n", player2.getName().c_str());
+                break;
+            }
+        }
+        else{
+            // Player1's move
+            char* command = new char[32];
+            bool correctMove = false;
+            while (!correctMove){
+                fprintf(stdout, "%s make your move\n", player1.getName().c_str());
+                fprintf(stdout, "TL, TM, TR, ML, MM, MR, BL, BM, BR\n");
+                scanf("%s", command);
+                correctMove = player1.move(board, command);
+            }
+            won = checkWin(board);
+            if (won){
+                fprintf(stdout, "%s won!\n", player1.getName().c_str());
+                break;
+            }
+        }
+        if (isBoardFull(board)){
+            fprintf(stdout, "Draw! No one won.\n");
+            break;
+        }
+        fprintf(stdout, "Current board:\n");
+        printCheckerboard(board);
     }
+    fprintf(stdout, "Final board:\n");
+    printCheckerboard(board);
+    fprintf(stdout, "Game ended, Thanks for playing!\n");
     return 0;
 }
-
 /*
  *  Prints the checkerboard
  *  Example:
@@ -91,38 +173,42 @@ bool checkWin(char array[3][3]){
     // Vertical (x3)
     bool won = false;
     // Horizontal check
-    if (array[0][0] == array[0][1] && array[0][1] == array[0][2] && array[0][0]){
+    if (array[0][0] == array[0][1] && array[0][1] == array[0][2] && array[0][0] != ' '){
         won = true;
     }
-    if (array[1][0] == array[1][1] && array[1][1] == array[1][2]){
+    else if (array[1][0] == array[1][1] && array[1][1] == array[1][2] && array[1][0] != ' '){
         won  = true;
     }
-    if (array[2][0] == array[2][1] && array[2][1] == array[2][2]){
+    else if (array[2][0] == array[2][1] && array[2][1] == array[2][2] && array[2][0] != ' '){
         won = true;
     }
-
     // Vertical check
-    if (array[0][0] == array[0][1] && array[0][1] == array[0][2]){
+    else if (array[0][0] == array[1][0] && array[1][0] == array[2][0] && array[0][0] != ' '){
         won = true;
     }
-    if (array[1][0] == array[1][1] && array[1][1] == array[1][2]){
+    else if (array[0][1] == array[1][1] && array[1][1] == array[2][1] && array[0][1] != ' '){
         won  = true;
     }
-    if (array[2][0] == array[2][1] && array[2][1] == array[2][2]){
+    else if (array[0][2] == array[1][2] && array[1][2] == array[2][2] && array[0][2] != ' '){
         won = true;
     }
-
     // Cross-check
-    if (array[0][0] == array[0][1] && array[0][1] == array[0][2]){
+    else if (array[0][0] == array[1][1] && array[1][1] == array[2][2] && array[0][0] != ' '){
         won = true;
     }
-    if (array[1][0] == array[1][1] && array[1][1] == array[1][2]){
+    else if (array[0][2] == array[1][1] && array[1][1] == array[2][0] && array[0][2] != ' '){
         won  = true;
-    }
-    if (array[2][0] == array[2][1] && array[2][1] == array[2][2]){
-        won = true;
     }
 
     return won;
+}
+
+bool isBoardFull(char array[3][3]){
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            if (array[i][j] == ' '){ return false; }
+        }
+    }
+    return true;
 }
 
