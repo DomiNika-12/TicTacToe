@@ -4,21 +4,12 @@
 
 #include "Player.h"
 
-Player::Player(char* name, bool isX) {
-    score = 0;
-    this->isX = isX;
+Player::Player(char* name, char ch) {
+    this->ch = ch;
     this->name = name;
 }
 
 bool Player::move(char (*array)[3], char* command) {
-    char ch = ' ';
-    if (isX){
-        ch = 'X';
-    }
-    else {
-        ch = 'O';
-    }
-
     if (strcmp(command, "TL") == 0){
         if(array[0][0] == ' '){
             array[0][0] = ch;
@@ -117,5 +108,9 @@ bool Player::move(char (*array)[3], char* command) {
 
 string Player::getName() {
     return name;
+}
+
+char Player::getCh() {
+    return ch;
 }
 

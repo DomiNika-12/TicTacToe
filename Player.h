@@ -13,12 +13,12 @@ using namespace std;
 class Player {
 private:
     char* name;
-    bool isX;
-    int score;
+    char ch;
 public:
-    Player(char* name, bool isX);
+    Player(char* name, char ch);
     bool move(char array[3][3], char* command);
     string getName();
+    char getCh();
 };
 
 #endif //TICTACTOE_PLAYER_H
