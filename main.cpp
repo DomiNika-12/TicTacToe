@@ -1,10 +1,13 @@
-#include <iostream>
-#include <cstring>
+/*
+ * Author: Dominika Bobik
+ * dbobik@mtu.edu
+ * Created on: 12/24/2021
+ */
+
 #include "Player.h"
 #include "Game.h"
 #include <cstdlib>
 #include <chrono>
-#include <thread>
 
 using namespace std;
 using namespace std::this_thread;     // sleep_for, sleep_until

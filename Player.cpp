@@ -1,6 +1,8 @@
-//
-// Created by domi on 12/24/21.
-//
+/*
+ * Author: Dominika Bobik
+ * dbobik@mtu.edu
+ * Created on: 12/24/2021
+ */
 
 #include "Player.h"
 

@@ -1,6 +1,8 @@
-//
-// Created by domi on 12/24/21.
-//
+/*
+ * Author: Dominika Bobik
+ * dbobik@mtu.edu
+ * Created on: 12/24/2021
+ */
 
 #ifndef TICTACTOE_PLAYER_H
 #define TICTACTOE_PLAYER_H
